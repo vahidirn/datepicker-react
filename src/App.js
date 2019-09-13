@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import DatePicker from "./components/DatePicker/DatePicker";
+import "./styles/scss/main.scss";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    let [selectedDayRange, setSelectedDayRange] = useState({
+        from: null,
+        to: null
+    });
+
+    return (
+        <div className="App">
+            <DatePicker
+                onChange={(value) => {
+                    setSelectedDayRange(value);
+                }}
+                colorPrimary='#3389EE'
+                colorPrimaryLight='#3389ee59'
+                isGregorian={false}
+                selectedDayRange={selectedDayRange}
+                minimumDate={{
+                    day: 25,
+                    month: 4,
+                    year: 1398
+                }}
+                maximumDate={{
+                    day: 25,
+                    month: 4,
+                    year: 1399
+                }}
+
+            />
+        </div>
+    );
 }
 
 export default App;
