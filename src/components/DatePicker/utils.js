@@ -62,6 +62,20 @@ const getToday = (isGregorian = false) => {
     return currentDate;
 };
 
+
+const convertDate = (date, isGregorian, currentIsGregorian) => {
+    if (isGregorian !== currentIsGregorian) {
+        if (isGregorian) {
+            let newDate = jalaali.toJalaali(date.year, date.month, date.day);
+            return {day: newDate.jd, month: newDate.jm, year: newDate.jy};
+        } else {
+            let newDate = jalaali.toGregorian(date.year, date.month, date.day);
+            return {day: newDate.gd, month: newDate.gm, year: newDate.gy};
+        }
+    }
+    return date;
+};
+
 const createUniqueRange = (number, startingId) =>
     Array.from(Array(number).keys()).map(key => ({
         value: key + 1,
@@ -80,8 +94,6 @@ const getMonthName = (month, isGregorian = false) => {
 
 };
 
-
-const getMonthNumber = monthName => PERSIAN_MONTHS.indexOf(monthName) + 1;
 
 const getMonthLength = date => jalaali.jalaaliMonthLength(date.year, date.month);
 
@@ -165,7 +177,6 @@ export {
     toPersianNumber,
     createUniqueRange,
     getMonthName,
-    getMonthNumber,
     getMonthLength,
     getMonthFirstWeekday,
     getDateAccordingToMonth,
@@ -175,4 +186,5 @@ export {
     putZero,
     shallowCloneObject,
     deepCloneObject,
+    convertDate,
 };

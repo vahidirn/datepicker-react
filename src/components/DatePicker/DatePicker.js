@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
+import {convertDate} from './utils';
 
 let shouldPreventFocus;
 let mousePosition;
@@ -38,6 +39,8 @@ const DatePicker = ({
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
   const [selectedInput, setSelectedInput] = useState('start');
   const [isGregorianState, setLocale] = useState(isGregorian);
+  const [minimumDateState, setMinimumDate] = useState(minimumDate);
+  const [maximumDateState, setMaximumDate] = useState(maximumDate);
 
   const handleMouseMove = e => {
     const { clientX: x, clientY: y } = e;
@@ -47,6 +50,8 @@ const DatePicker = ({
 
   const toggleLocale = () => {
     setLocale(!isGregorianState);
+    setMinimumDate(convertDate(minimumDate, isGregorian, !isGregorianState));
+    setMaximumDate(convertDate(maximumDate, isGregorian, !isGregorianState));
     onChange({
       from: null,
       to:null
@@ -142,8 +147,8 @@ const DatePicker = ({
           colorPrimary={colorPrimary}
           colorPrimaryLight={colorPrimaryLight}
           onDisabledDayError={onDisabledDayError}
-          minimumDate={minimumDate}
-          maximumDate={maximumDate}
+          minimumDate={minimumDateState}
+          maximumDate={maximumDateState}
           selectorStartingYear={selectorStartingYear}
           selectorEndingYear={selectorEndingYear}
           selectedInput={selectedInput}
